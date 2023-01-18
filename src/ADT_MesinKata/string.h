@@ -15,7 +15,7 @@ boolean isWordSame(Word str1, char str2[]);
 boolean isLineSame(Line l, char str2[]);
 /* Mengembalikan true jika kedua kalimat sama dan false jika tidak (kalimat di sini berarti satu baris dengan spasi) */
 
-void isLineCorrect(int *arr[5]);
+void isLineCorrect(int (*arr)[]);
 /* Mengembalikan true jika kedua kalimat sama dan false jika tidak (kalimat di sini berarti satu baris dengan spasi) */
 
 int wordToInt(Word cc);

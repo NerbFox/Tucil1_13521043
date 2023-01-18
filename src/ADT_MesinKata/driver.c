@@ -9,7 +9,8 @@ int main()
     int a,b,c,d;
     int arr[5];
     boolean cek = false;
-    while (!cek)
+    arr[4]=0;
+    while (!(arr[4]))
     {
         printf("Masukkan Command = ");
         STARTCOMMAND();
@@ -18,7 +19,12 @@ int main()
         // {
             cek = true;
             // STARTLINE("ConfigMakanan.txt");
-            isLineCorrect(&arr[5]);
+            isLineCorrect(&arr);
+            printf("%d\n",arr[0]);
+            printf("%d\n",arr[1]);
+            printf("%d\n",arr[2]);
+            printf("%d\n",arr[3]);
+            printf("%d\n",arr[4]);
 
             // printf("%d\n", currentLength);
             // printf("%s\n", currentWord.String);

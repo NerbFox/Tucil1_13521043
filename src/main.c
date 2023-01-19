@@ -1,48 +1,74 @@
 #include <stdio.h>
-#include <string.h>
+#include "ADT_MesinKata/boolean.h"
+#include "ADT_MesinKata/mesinkarakter.c"
+#include "ADT_MesinKata/mesinkata.c"
+#include "ADT_MesinKata/string.c"
+
+void menu()
+{
+    printf("\n\nMain Menu\n");
+    printf("1. Input 4 numbers \n");
+    printf("2. Generate 4 random numbers \n");
+    printf("3. Exit \n");
+    printf("Menu:  ");
+    STARTCOMMAND();
+    STARTWORD();
+}
 
 int main()
 {
-    // kamus
-    char menu[3];
+    // KAMUS
+    // int a,b,c,d;
+    int arr[5], n = 0;
+    boolean cek = false;
+    arr[4] = 0;
 
     printf("\n\n -------------------- Make It  24 -------------------- \n");
 
     // Menu
-    printf("\n\nMain Menu\n");
-    printf("1. Input 4 angka \n");
-    printf("2. Generate 4 angka random \n");
+    menu();
 
-    printf("Menu:  ");
-    scanf("%c", &menu[0]);
-    if (menu[0] == '1')
+    while (!(isWordSame(currentWord, "1") || isWordSame(currentWord, "2") || isWordSame(currentWord, "3")))
     {
-        printf("\n-------------------- Menu 1 -------------------- \n");
-        int i, m1, m2, m3, m4, n = 1;
-        char masukan[n];
-        for (i = 0; i < n; i++)
-        {
-            scanf("%c", &masukan[i]);
-        }
-        for (i = 0; i < n; i++)
-        {
-            printf("%d. %c\n", i, masukan[i]);
-        }
-        // while(1<(masukan-48)<=9)
+        printf("\n---Masukan tidak sesuai---\n");
+        menu();
+    }
 
-        // penyimpanan file txt
-    }
-    else if (menu[0] == '2')
+    if (isWordSame(currentWord, "1"))
     {
-        printf("\n-------------------- Menu 2 -------------------- \n");
+        printf("\nMenu 1\n");
+        printf("Input = ");
+        STARTCOMMAND();
+        STARTWORD();
+        isLineCorrect(&arr);
+
+        while (!(arr[4]))
+        {
+            printf("\n---Masukan tidak sesuai---\n");
+            printf("Input = ");
+            STARTCOMMAND();
+            STARTWORD();
+            isLineCorrect(&arr);
+            // printf("%d\n",arr[0]);
+            // printf("%d\n",arr[1]);
+            // printf("%d\n",arr[2]);
+            // printf("%d\n",arr[3]);
+            // printf("%d\n",arr[4]);
+        }
+
+        // menu 1
     }
+
+    else if (isWordSame(currentWord, "2"))
+    {
+        printf("\nMenu 2\n");
+        printf("Generate 4 numbers\n");
+    }
+
     else
     {
-        printf("Masukan tidak sesuai\n");
+        printf("\n ------------------- terima kasih ------------------- \n\n");
     }
-
-    printf("\n");
-    printf("\n");
 
     return 0;
 }

@@ -102,8 +102,8 @@ void isLineCorrect(int (*arr)[])
                 (*arr)[4] = 0;
                 i--;
             }
-            printf("i :  %d\n", i);
-            printf("arr :  %d\n", (*arr)[n]);
+            // printf("i :  %d\n", i);
+            // printf("arr :  %d\n", (*arr)[n]);
         }
         else
         {
@@ -118,7 +118,7 @@ void isLineCorrect(int (*arr)[])
         (*arr)[4] = 0;
     }
     // ADVWORD();
-    printf("end %d\n", currentWord.Length);
+    // printf("end %d\n", currentWord.Length);
     // if lebih dari 4
     if (currentWord.Length != 0)
     {

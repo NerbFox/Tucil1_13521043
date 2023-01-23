@@ -15,26 +15,28 @@ void menu()
 {
     printf("\n\n -------------------- Make It  24 -------------------- \n");
     printf("\nMain Menu\n");
-    printf("1. Input 4 numbers \n");
-    printf("2. Generate 4 random numbers \n");
-    printf("3. Exit \n");
+    printf("1. Input 4 Cards\n");
+    printf("2. Generate 4 Random Numbers\n");
+    printf("3. Exit\n");
     printf("Menu:  ");
     STARTCOMMAND();
     STARTWORD();
 }
 
-boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np){
+boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np)
+{
     // if(np>-1){
-        boolean found = false;
-        int i = 0;
-        while (! found && i<np+1)
+    boolean found = false;
+    int i = 0;
+    while (!found && i < np + 1)
+    {
+        if ((*arrPermut)[i][0] == arr[0] && (*arrPermut)[i][1] == arr[1] && (*arrPermut)[i][2] == arr[2] && (*arrPermut)[i][3] == arr[3])
         {
-            if((*arrPermut)[i][0]==arr[0] && (*arrPermut)[i][1]==arr[1] && (*arrPermut)[i][2]==arr[2] && (*arrPermut)[i][3]==arr[3]){
-                found=true;
-            }
-            i++;
+            found = true;
         }
-        return found;
+        i++;
+    }
+    return found;
     // }
     // else{
     //     return false;
@@ -91,7 +93,6 @@ void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr],
     a = (hasil3n)[2];
     if (a == 24.00)
     {
-        printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
@@ -106,7 +107,6 @@ void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr],
     b = (hasil3n)[2];
     if (b == 24.0)
     {
-        printf("%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
@@ -121,7 +121,6 @@ void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr],
     c = (hasil3n)[2];
     if (c == 24.0)
     {
-        printf("(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
@@ -136,7 +135,6 @@ void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr],
     d = (hasil3n)[2];
     if (d == 24.00)
     {
-        printf("%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
@@ -151,7 +149,6 @@ void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr],
     e = (hasil3n)[2];
     if (e == 24.0)
     {
-        printf("(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
@@ -233,6 +230,62 @@ void TwentyFourG(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], flo
         (*hasil3)[*neff][0] = hasil3n[0];
         (*hasil3)[*neff][1] = hasil3n[1];
         (*hasil3)[*neff][2] = e;
+    }
+}
+
+void TwentyFourSolutions(int number[4], char op[3], int *neff)
+{
+    float a, b, c, d, e;
+    char temp;
+    float hasil3n[3];
+    // ((n0+n1)+n2)+n3  (*hasil3)[*neff][0]
+    (hasil3n)[0] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[1], number[2]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    a = (hasil3n)[2];
+    if (a == 24.00)
+    {
+        (*neff)++;
+    }
+
+    // n0+((n1+n2)+n3)
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[2], number[3]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    b = (hasil3n)[2];
+    if (b == 24.0)
+    {
+        (*neff)++;
+    }
+
+    // (n0+(n1+n2))+n3
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate(number[0], op[0], (hasil3n)[0]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    c = (hasil3n)[2];
+    if (c == 24.0)
+    {
+        (*neff)++;
+    }
+
+    // n0+(n1+(n2+n3))
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[1], op[1], (hasil3n)[0]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    d = (hasil3n)[2];
+    if (d == 24.00)
+    {
+        (*neff)++;
+    }
+
+    // (n0+n1)+(n2+n3)
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[1], (hasil3n)[0]);
+    e = (hasil3n)[2];
+    if (e == 24.0)
+    {
+        (*neff)++;
     }
 }
 
@@ -633,6 +686,7 @@ int main()
     boolean cek = false;
     boolean simpan = false;
     struct timespec awal, akhir;
+    double waktu;
 
     // char FiName[100];
     char ResultName[100] = "../doc/Hasil/";
@@ -649,7 +703,7 @@ int main()
         arr[4] = 0;
         TwentyFour = 24.0;
         neff = -1;
-        np=-1;
+        np = -1;
         endOfStr = '\0';
         cek = false;
         simpan = false;
@@ -663,12 +717,8 @@ int main()
         if (isWordSame(currentWord, "1"))
         {
             printf("\nMenu 1\n");
-            save();
-            if (isWordSame(currentWord, "y"))
-            {
-                simpan = true;
-            }
-            printf("Input 4 numbers = ");
+            printf("Make it 24 with Cards : A,2,3,4,5,6,7,8,9,10,J,K,Q\n");
+            printf("Input 4 Cards = ");
             STARTCOMMAND();
             STARTWORD();
             isLineCorrect(&arr);
@@ -690,11 +740,6 @@ int main()
         else
         {
             printf("\nMenu 2\n");
-            save();
-            if (isWordSame(currentWord, "y"))
-            {
-                simpan = true;
-            }
             printf("Generate 4 numbers\n");
             for (i = 0; i < 4; i++)
             {
@@ -703,28 +748,10 @@ int main()
             printf("4 random numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
         }
 
-        if (simpan)
-        {
-            fileName();
-            strcat(ResultName, currentWord.String);
-            strcat(ResultName, typeName);
-            // printf("%s", ResultName);
-
-            FileName = ResultName;
-            FileCr = fopen(FileName, "w");
-            if (FileCr == NULL)
-            {
-                printf("Gagal membuat file %s", FileName);
-                return -1;
-            }
-
-            fprintf(FileCr, "Hasil Semua Solusi\n");
-            fprintf(FileCr, "Input numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
-        }
-
+        // Program Utama Brute Force
         // waktu mulai
         clock_gettime(CLOCK_REALTIME, &awal);
-        // Permurtasi 4 angka
+        // Permurtasi 4 angka dengan i,j,k,l dan beberapa kondisi
         ni = 1;
         for (i = 0; i < 4; i++)
         {
@@ -745,13 +772,87 @@ int main()
                                     arrHasil[2] = arr[k];
                                     arrHasil[3] = arr[l];
 
-                                    if (! IsIn(arrHasil, &arrPermut, np)){
+                                    if (!IsIn(arrHasil, &arrPermut, np))
+                                    {
                                         np++;
                                         arrPermut[np][0] = arrHasil[i];
                                         arrPermut[np][1] = arrHasil[j];
                                         arrPermut[np][2] = arrHasil[k];
                                         arrPermut[np][3] = arrHasil[l];
-                                    
+
+                                        // Kombinasi, 3 dari 4 buah operasi
+                                        for (i1 = 0; i1 < 4; i1++)
+                                        {
+                                            for (i2 = 0; i2 < 4; i2++)
+                                            {
+                                                for (i3 = 0; i3 < 4; i3++)
+                                                {
+                                                    OpHasil[0] = Op[i1];
+                                                    OpHasil[1] = Op[i2];
+                                                    OpHasil[2] = Op[i3];
+                                                    TwentyFourSolutions(arrHasil, OpHasil, &neff);
+                                                    ni++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // waktu selesai
+        clock_gettime(CLOCK_REALTIME, &akhir);
+        if (neff != -1)
+        {
+            if (neff == 0)
+            {
+                printf("\n%d solution found\n", neff + 1);
+            }
+            else
+            {
+                printf("\n%d solutions found\n", neff + 1);
+            }
+        }
+        else
+        {
+            printf("\nNo solutions found\n");
+        }
+
+        // Program untuk Menampilkan solusi ke layar
+        n = 0;
+        neff = -1;
+        np = -1;
+        ni = 1;
+        for (i = 0; i < 4; i++)
+        {
+            for (j = 0; j < 4; j++)
+            {
+                if (j != i)
+                {
+                    for (k = 0; k < 4; k++)
+                    {
+                        if (k != i && k != j)
+                        {
+                            for (l = 0; l < 4; l++)
+                            {
+                                if (l != i && l != j && l != k)
+                                {
+                                    arrHasil[0] = arr[i];
+                                    arrHasil[1] = arr[j];
+                                    arrHasil[2] = arr[k];
+                                    arrHasil[3] = arr[l];
+
+                                    if (!IsIn(arrHasil, &arrPermut, np))
+                                    {
+                                        np++;
+                                        arrPermut[np][0] = arrHasil[i];
+                                        arrPermut[np][1] = arrHasil[j];
+                                        arrPermut[np][2] = arrHasil[k];
+                                        arrPermut[np][3] = arrHasil[l];
+
                                         // printf("ni = %d\n", ni);
                                         // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
                                         // printf("\n");
@@ -760,6 +861,7 @@ int main()
                                         //     printf("%d ", arrHasil[z]);
                                         // }
 
+                                        // Kombinasi, 3 dari 4 buah operasi
                                         for (i1 = 0; i1 < 4; i1++)
                                         {
                                             for (i2 = 0; i2 < 4; i2++)
@@ -774,17 +876,9 @@ int main()
                                                     // printf("\n");
                                                     // printf("Op\n");
                                                     // printf("%c %c %c", OpHasil[0], OpHasil[1],  OpHasil[2]);
-                                                    if (simpan)
-                                                    {
-                                                        TwentyFourGSave(arrHasil, OpHasil, &Hasil, &hasil3, &neff, FileCr);
-                                                    }
-                                                    else
-                                                    {
-                                                        TwentyFourG(arrHasil, OpHasil, &Hasil, &hasil3, &neff);
-                                                    }
-
-                                                    // printf("\n\n Total kemungkinan kombinasi dari Op dan permutasi dari numbers : %d\n", ni);`
+                                                    TwentyFourG(arrHasil, OpHasil, &Hasil, &hasil3, &neff);
                                                     ni++;
+                                                    // printf("\n\n Total kemungkinan kombinasi dari Op dan permutasi dari numbers : %d\n", ni);`
                                                     // printf("\n\n");
                                                 }
                                             }
@@ -798,27 +892,118 @@ int main()
             }
         }
 
+        // Program untuk menyimpan solusi jika diinginkan
+        save();
+        if (isWordSame(currentWord, "y"))
+        {
+            simpan = true;
+        }
         if (simpan)
         {
+            fileName();
+            strcat(ResultName, currentWord.String);
+            strcat(ResultName, typeName);
+            // printf("%s", ResultName);
+
+            FileName = ResultName;
+            FileCr = fopen(FileName, "w");
+            if (FileCr == NULL)
+            {
+                printf("Gagal membuat file %s", FileName);
+                return -1;
+            }
+
+            fprintf(FileCr, "Hasil Semua Solusi\n");
+            fprintf(FileCr, "Input numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
+
+            n = 0;
+            neff = -1;
+            np = -1;
+            ni = 1;
+            for (i = 0; i < 4; i++)
+            {
+                for (j = 0; j < 4; j++)
+                {
+                    if (j != i)
+                    {
+                        for (k = 0; k < 4; k++)
+                        {
+                            if (k != i && k != j)
+                            {
+                                for (l = 0; l < 4; l++)
+                                {
+                                    if (l != i && l != j && l != k)
+                                    {
+                                        arrHasil[0] = arr[i];
+                                        arrHasil[1] = arr[j];
+                                        arrHasil[2] = arr[k];
+                                        arrHasil[3] = arr[l];
+
+                                        if (!IsIn(arrHasil, &arrPermut, np))
+                                        {
+                                            np++;
+                                            arrPermut[np][0] = arrHasil[i];
+                                            arrPermut[np][1] = arrHasil[j];
+                                            arrPermut[np][2] = arrHasil[k];
+                                            arrPermut[np][3] = arrHasil[l];
+
+                                            // printf("ni = %d\n", ni);
+                                            // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
+                                            // printf("\n");
+
+                                            // for (z=0; z<4 ; z++){
+                                            //     printf("%d ", arrHasil[z]);
+                                            // }
+
+                                            // Kombinasi, 3 dari 4 buah operasi
+                                            for (i1 = 0; i1 < 4; i1++)
+                                            {
+                                                for (i2 = 0; i2 < 4; i2++)
+                                                {
+                                                    for (i3 = 0; i3 < 4; i3++)
+                                                    {
+                                                        OpHasil[0] = Op[i1];
+                                                        OpHasil[1] = Op[i2];
+                                                        OpHasil[2] = Op[i3];
+                                                        // printf("ni = %d\n", ni);
+                                                        // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
+                                                        // printf("\n");
+                                                        // printf("Op\n");
+                                                        // printf("%c %c %c", OpHasil[0], OpHasil[1],  OpHasil[2]);
+                                                        TwentyFourGSave(arrHasil, OpHasil, &Hasil, &hasil3, &neff, FileCr);
+                                                        ni++;
+                                                        // printf("\n\n Total kemungkinan kombinasi dari Op dan permutasi dari numbers : %d\n", ni);`
+                                                        // printf("\n\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Menutup file
             fclose(FileCr);
-            printf("\nFile tersimpan\n");
+            printf("File tersimpan\n");
         }
 
-        // waktu selesai
-        clock_gettime(CLOCK_REALTIME, &akhir);
-        printf("\nBanyaknya Solusi: %d\n", neff + 1);
-        double waktu = (akhir.tv_sec - awal.tv_sec) + (akhir.tv_nsec - awal.tv_nsec) / MILYAR;
+        waktu = (akhir.tv_sec - awal.tv_sec) + (akhir.tv_nsec - awal.tv_nsec) / MILYAR;
         printf("Waktu Eksekusi: %f seconds\n", (waktu));
 
-        for(i=0; i<np+1; i++){
-            printf("%d.", i);
-            for(j=0; j<4; j++){
-                printf(" %d", arrPermut[i][j]);
-            }
-            printf("\n");
-        }
-        
+        // for (i = 0; i < np + 1; i++)
+        // {
+        //     printf("%d.", i);
+        //     for (j = 0; j < 4; j++)
+        //     {
+        //         printf(" %d", arrPermut[i][j]);
+        //     }
+        //     printf("\n");
+        // }
+
         // Menu
         // menu();
         printf("type '0' (Main Menu) and '3' (exit) : ");

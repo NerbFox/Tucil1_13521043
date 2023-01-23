@@ -7,12 +7,13 @@
 #include "ADT_MesinKata/mesinkata.h"
 #include "ADT_MesinKata/string.h"
 
-#define maxHasil 300
+#define maxHasil 700
 #define maxStr 15
-#define MILYAR  1000000000.0
+#define MILYAR 1000000000.0
 
 void menu()
 {
+    printf("\n\n -------------------- Make It  24 -------------------- \n");
     printf("\nMain Menu\n");
     printf("1. Input 4 numbers \n");
     printf("2. Generate 4 random numbers \n");
@@ -20,6 +21,24 @@ void menu()
     printf("Menu:  ");
     STARTCOMMAND();
     STARTWORD();
+}
+
+boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np){
+    // if(np>-1){
+        boolean found = false;
+        int i = 0;
+        while (! found && i<np+1)
+        {
+            if((*arrPermut)[i][0]==arr[0] && (*arrPermut)[i][1]==arr[1] && (*arrPermut)[i][2]==arr[2] && (*arrPermut)[i][3]==arr[3]){
+                found=true;
+            }
+            i++;
+        }
+        return found;
+    // }
+    // else{
+    //     return false;
+    // }
 }
 
 void save()
@@ -30,7 +49,8 @@ void save()
     STARTWORD();
 }
 
-void fileName(){
+void fileName()
+{
     printf("Nama File: ");
     STARTCOMMAND();
     STARTWORD();
@@ -58,476 +78,547 @@ float calculate(int a, char op, int b)
     }
 }
 
-void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff, FILE *FileCr){
+void TwentyFourGSave(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff, FILE *FileCr)
+{
 
-    float a,b,c,d,e;
-    char temp; 
+    float a, b, c, d, e;
+    char temp;
     float hasil3n[3];
     // ((n0+n1)+n2)+n3  (*hasil3)[*neff][0]
-    (hasil3n)[0]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[1], number[2]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); a = (hasil3n)[2];
-    if(a==24.00) {
+    (hasil3n)[0] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[1], number[2]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    a = (hasil3n)[2];
+    if (a == 24.00)
+    {
         printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=a;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = a;
     }
 
     // n0+((n1+n2)+n3)
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[2], number[3]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); b = (hasil3n)[2];
-    if(b==24.0) {
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[2], number[3]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    b = (hasil3n)[2];
+    if (b == 24.0)
+    {
         printf("%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=b;
-    } 
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = b;
+    }
 
     // (n0+(n1+n2))+n3
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate(number[0], op[0], (hasil3n)[0]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); c = (hasil3n)[2];
-    if(c==24.0) {
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate(number[0], op[0], (hasil3n)[0]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    c = (hasil3n)[2];
+    if (c == 24.0)
+    {
         printf("(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=c;
-    } 
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = c;
+    }
 
     // n0+(n1+(n2+n3))
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[1], op[1], (hasil3n)[0]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); d = (hasil3n)[2];
-    if(d==24.00) {
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[1], op[1], (hasil3n)[0]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    d = (hasil3n)[2];
+    if (d == 24.00)
+    {
         printf("%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=d;
-    } 
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = d;
+    }
 
     // (n0+n1)+(n2+n3)
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[1], (hasil3n)[0]); e = (hasil3n)[2];
-    if(e==24.0) {
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[1], (hasil3n)[0]);
+    e = (hasil3n)[2];
+    if (e == 24.0)
+    {
         printf("(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         fprintf(FileCr, "(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=e;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = e;
     }
-
 }
 
-void TwentyFourG(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff){
-    float a,b,c,d,e;
-    char temp; 
+void TwentyFourG(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff)
+{
+    float a, b, c, d, e;
+    char temp;
     float hasil3n[3];
     // ((n0+n1)+n2)+n3  (*hasil3)[*neff][0]
-    (hasil3n)[0]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[1], number[2]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); a = (hasil3n)[2];
-    if(a==24.00) {
+    (hasil3n)[0] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[1], number[2]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    a = (hasil3n)[2];
+    if (a == 24.00)
+    {
         printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=a;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = a;
     }
 
     // n0+((n1+n2)+n3)
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[2], number[3]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); b = (hasil3n)[2];
-    if(b==24.0) {
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[2], number[3]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    b = (hasil3n)[2];
+    if (b == 24.0)
+    {
         printf("%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=b;
-    } 
-
-    // (n0+(n1+n2))+n3
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate(number[0], op[0], (hasil3n)[0]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); c = (hasil3n)[2];
-    if(c==24.0) {
-        printf("(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
-        (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=c;
-    } 
-
-    // n0+(n1+(n2+n3))
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[1], op[1], (hasil3n)[0]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); d = (hasil3n)[2];
-    if(d==24.00) {
-        printf("%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
-        (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=d;
-    } 
-
-    // (n0+n1)+(n2+n3)
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[1], (hasil3n)[0]); e = (hasil3n)[2];
-    if(e==24.0) {
-        (*neff)++;
-        printf("(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=e;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = b;
     }
 
+    // (n0+(n1+n2))+n3
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate(number[0], op[0], (hasil3n)[0]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    c = (hasil3n)[2];
+    if (c == 24.0)
+    {
+        printf("(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
+        (*neff)++;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = c;
+    }
+
+    // n0+(n1+(n2+n3))
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[1], op[1], (hasil3n)[0]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    d = (hasil3n)[2];
+    if (d == 24.00)
+    {
+        printf("%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
+        (*neff)++;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = d;
+    }
+
+    // (n0+n1)+(n2+n3)
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[1], (hasil3n)[0]);
+    e = (hasil3n)[2];
+    if (e == 24.0)
+    {
+        (*neff)++;
+        printf("(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = e;
+    }
 }
 
-void TwentyFourData(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff){
-    float a,b,c,d,e;
-    char temp; 
+void TwentyFourData(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], float (*hasil3)[maxHasil][3], int *neff)
+{
+    float a, b, c, d, e;
+    char temp;
     float hasil3n[3];
     // ((n0+n1)+n2)+n3  (*hasil3)[*neff][0]
-    (hasil3n)[0]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[1], number[2]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); a = (hasil3n)[2];
-    if(a==24.00) {
+    (hasil3n)[0] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[1], number[2]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    a = (hasil3n)[2];
+    if (a == 24.00)
+    {
         printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=a;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = a;
         // printf("nef %d\n", *neff);
         temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[0]>9){
+        if (number[0] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[0] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[0] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[0]), 1);
-        if(number[1]>9){
+        if (number[1] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[1] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[1] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp =')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &(op[1]), 1);
-        if(number[2]>9){
+        if (number[2] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[2] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[2] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp =')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &(op[2]), 1);
-        if(number[3]>9){
+        if (number[3] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[3] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[3] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
     }
 
     // n0+((n1+n2)+n3)
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate((hasil3n)[0], op[2], number[3]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); b = (hasil3n)[2];
-    if(b==24.0) {
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate((hasil3n)[0], op[2], number[3]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    b = (hasil3n)[2];
+    if (b == 24.0)
+    {
         printf("%d%c((%d%c%d)%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=b;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = b;
         // printf("nefoo %d\n", *neff);
-        if(number[0]>9){
+        if (number[0] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[0] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[0] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[0]), 1);
-        temp ='(';
+        temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[1]>9){
+        if (number[1] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[1] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[1] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[1]), 1);
-        if(number[2]>9){
+        if (number[2] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[2] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[2] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp =')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &(op[2]), 1);
-        if(number[3]>9){
+        if (number[3] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[3] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[3] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp=')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
-    } 
+    }
 
     // (n0+(n1+n2))+n3
-    (hasil3n)[0]=calculate(number[1], op[1], number[2]);
-    (hasil3n)[1]=calculate(number[0], op[0], (hasil3n)[0]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[2], number[3]); c = (hasil3n)[2];
-    if(c==24.0) {
+    (hasil3n)[0] = calculate(number[1], op[1], number[2]);
+    (hasil3n)[1] = calculate(number[0], op[0], (hasil3n)[0]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
+    c = (hasil3n)[2];
+    if (c == 24.0)
+    {
         printf("(%d%c(%d%c%d))%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=c;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = c;
         // printf("nefi %d\n", *neff);
         temp = '(';
         strncat(((*hasil))[*neff], &temp, 1);
-        if(number[0]>9){
+        if (number[0] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[0] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[0] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[0]), 1);
-        temp ='(';
+        temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[1]>9){
+        if (number[1] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[1] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[1] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[1]), 1);
-        if(number[2]>9){
+        if (number[2] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[2] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[2] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp =')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &(op[2]), 1);
-        if(number[3]>9){
+        if (number[3] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[3] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[3] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-    } 
+    }
 
     // n0+(n1+(n2+n3))
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[1], op[1], (hasil3n)[0]);
-    (hasil3n)[2]=calculate(number[0], op[0], (hasil3n)[1]); d = (hasil3n)[2];
-    if(d==24.00) {
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[1], op[1], (hasil3n)[0]);
+    (hasil3n)[2] = calculate(number[0], op[0], (hasil3n)[1]);
+    d = (hasil3n)[2];
+    if (d == 24.00)
+    {
         printf("%d%c(%d%c(%d%c%d))\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=d;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = d;
         // printf("nefoo %d\n", *neff);
-        if(number[0]>9){
+        if (number[0] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[0] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[0] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[0]), 1);
-        temp ='(';
+        temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[1]>9){
+        if (number[1] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[1] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[1] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[1]), 1);
-        temp ='(';
+        temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[2]>9){
+        if (number[2] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[2] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[2] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[2]), 1);
-        if(number[3]>9){
+        if (number[3] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[3] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[3] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp=')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &temp, 1);
-    } 
+    }
 
     // (n0+n1)+(n2+n3)
-    (hasil3n)[0]=calculate(number[2], op[2], number[3]);
-    (hasil3n)[1]=calculate(number[0], op[0], number[1]);
-    (hasil3n)[2]=calculate((hasil3n)[1], op[1], (hasil3n)[0]); e = (hasil3n)[2];
-    if(e==24.0) {
+    (hasil3n)[0] = calculate(number[2], op[2], number[3]);
+    (hasil3n)[1] = calculate(number[0], op[0], number[1]);
+    (hasil3n)[2] = calculate((hasil3n)[1], op[1], (hasil3n)[0]);
+    e = (hasil3n)[2];
+    if (e == 24.0)
+    {
         (*neff)++;
         printf("(%d%c%d)%c(%d%c%d)\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
-        (*hasil3)[*neff][0]=hasil3n[0];
-        (*hasil3)[*neff][1]=hasil3n[1];
-        (*hasil3)[*neff][2]=e;
+        (*hasil3)[*neff][0] = hasil3n[0];
+        (*hasil3)[*neff][1] = hasil3n[1];
+        (*hasil3)[*neff][2] = e;
         // printf("nefoo %d\n", *neff);
-        temp ='(';
+        temp = '(';
         // (*hasil)[*neff][0]='(';
         // (*hasil)[*neff][0]='(';
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[0]>9){
+        if (number[0] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[0] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[0] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[0]), 1);
-        if(number[1]>9){
+        if (number[1] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[1] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[1] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp =')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
         strncat((*hasil)[*neff], &(op[1]), 1);
-        temp ='(';
+        temp = '(';
         strncat((*hasil)[*neff], &temp, 1);
-        if(number[2]>9){
+        if (number[2] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[2] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[2] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
         strncat((*hasil)[*neff], &(op[2]), 1);
-        if(number[3]>9){
+        if (number[3] > 9)
+        {
             temp = '1';
             strncat((*hasil)[*neff], &temp, 1);
             temp = number[3] % 10 + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        else{
+        else
+        {
             temp = number[3] + 48;
             strncat((*hasil)[*neff], &temp, 1);
         }
-        temp=')';
+        temp = ')';
         strncat((*hasil)[*neff], &temp, 1);
-    } 
+    }
 }
 
 // const char* intToStr(int n){
 //     char h[3] = "10";
 //     return h[3];
-// } 
+// }
 
 int main()
 {
     // KAMUS
-    int arr[5], n = 0, i, j, k ,l, ni, z, i1, i2, i3;
+    int arr[5], n = 0, i, j, k, l, ni, z, i1, i2, i3, np;
     arr[4] = 0;
     int atas = 13, bawah = 1;
     float TwentyFour = 24.0;
@@ -536,8 +627,9 @@ int main()
     char Op[4] = {'+', '-', '*', '/'};
     char OpHasil[3];
     int arrHasil[4];
+    int arrPermut[maxHasil][4];
     float hasil3[maxHasil][3];
-    char endOfStr ='\0';
+    char endOfStr = '\0';
     boolean cek = false;
     boolean simpan = false;
     struct timespec awal, akhir;
@@ -557,11 +649,10 @@ int main()
         arr[4] = 0;
         TwentyFour = 24.0;
         neff = -1;
-        endOfStr ='\0';
+        np=-1;
+        endOfStr = '\0';
         cek = false;
         simpan = false;
-
-        printf("\n\n -------------------- Make It  24 -------------------- \n");
 
         while (!(isWordSame(currentWord, "1") || isWordSame(currentWord, "2") || isWordSame(currentWord, "3")))
         {
@@ -573,8 +664,9 @@ int main()
         {
             printf("\nMenu 1\n");
             save();
-            if(isWordSame(currentWord,"y")){
-                simpan=true;
+            if (isWordSame(currentWord, "y"))
+            {
+                simpan = true;
             }
             printf("Input 4 numbers = ");
             STARTCOMMAND();
@@ -594,88 +686,110 @@ int main()
                 // printf("%d\n",arr[3]);
                 // printf("%d\n",arr[4]);
             }
-        
         }
-        else 
+        else
         {
             printf("\nMenu 2\n");
             save();
-            if(isWordSame(currentWord,"y")){
-                simpan=true;
+            if (isWordSame(currentWord, "y"))
+            {
+                simpan = true;
             }
             printf("Generate 4 numbers\n");
-            for (i=0; i<4; i++){
+            for (i = 0; i < 4; i++)
+            {
                 arr[i] = (rand() % (atas - bawah + 1)) + bawah;
             }
-		    printf("4 random numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
-
+            printf("4 random numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
         }
 
-        if(simpan){
+        if (simpan)
+        {
             fileName();
             strcat(ResultName, currentWord.String);
             strcat(ResultName, typeName);
             // printf("%s", ResultName);
 
-            FileName = ResultName;  
+            FileName = ResultName;
             FileCr = fopen(FileName, "w");
             if (FileCr == NULL)
             {
                 printf("Gagal membuat file %s", FileName);
                 return -1;
             }
-            
+
             fprintf(FileCr, "Hasil Semua Solusi\n");
             fprintf(FileCr, "Input numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
         }
 
         // waktu mulai
         clock_gettime(CLOCK_REALTIME, &awal);
-        // Permurtasi 4 angka 
-        ni=1;
-        for (i=0; i<4 ; i++){
-            for (j=0; j<4 ; j++){
-                if(j != i){
-                    for (k=0; k<4 ; k++){
-                        if(k != i && k !=j){ 
-                            for (l=0; l<4 ; l++){
-                                if(l != i && l !=j && l!=k){ 
-                                    arrHasil[0]=arr[i];arrHasil[1]=arr[j];
-                                    arrHasil[2]=arr[k];arrHasil[3]=arr[l];
-                                    // printf("ni = %d\n", ni);
-                                    // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
-                                    // printf("\n");
+        // Permurtasi 4 angka
+        ni = 1;
+        for (i = 0; i < 4; i++)
+        {
+            for (j = 0; j < 4; j++)
+            {
+                if (j != i)
+                {
+                    for (k = 0; k < 4; k++)
+                    {
+                        if (k != i && k != j)
+                        {
+                            for (l = 0; l < 4; l++)
+                            {
+                                if (l != i && l != j && l != k)
+                                {
+                                    arrHasil[0] = arr[i];
+                                    arrHasil[1] = arr[j];
+                                    arrHasil[2] = arr[k];
+                                    arrHasil[3] = arr[l];
 
-                                    // for (z=0; z<4 ; z++){
-                                    //     printf("%d ", arrHasil[z]);
-                                    // }                                    
-                                    for (i1=0; i1<4 ; i1++){
-                                        for (i2=0; i2<4 ; i2++){
-                                            for (i3=0; i3<4 ; i3++){
-                                                OpHasil[0]=Op[i1];OpHasil[1]=Op[i2];
-                                                OpHasil[2]=Op[i3];
-                                                // printf("ni = %d\n", ni);
-                                                // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
-                                                // printf("\n");
-                                                // printf("Op\n");
-                                                // printf("%c %c %c", OpHasil[0], OpHasil[1],  OpHasil[2]);
-                                                if(simpan){
-                                                    TwentyFourGSave(arrHasil, OpHasil, &Hasil, &hasil3, &neff, FileCr);
+                                    if (! IsIn(arrHasil, &arrPermut, np)){
+                                        np++;
+                                        arrPermut[np][0] = arrHasil[i];
+                                        arrPermut[np][1] = arrHasil[j];
+                                        arrPermut[np][2] = arrHasil[k];
+                                        arrPermut[np][3] = arrHasil[l];
+                                    
+                                        // printf("ni = %d\n", ni);
+                                        // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
+                                        // printf("\n");
+
+                                        // for (z=0; z<4 ; z++){
+                                        //     printf("%d ", arrHasil[z]);
+                                        // }
+
+                                        for (i1 = 0; i1 < 4; i1++)
+                                        {
+                                            for (i2 = 0; i2 < 4; i2++)
+                                            {
+                                                for (i3 = 0; i3 < 4; i3++)
+                                                {
+                                                    OpHasil[0] = Op[i1];
+                                                    OpHasil[1] = Op[i2];
+                                                    OpHasil[2] = Op[i3];
+                                                    // printf("ni = %d\n", ni);
+                                                    // printf("%d %d %d %d", arrHasil[0], arrHasil[1],  arrHasil[2],  arrHasil[3]);
+                                                    // printf("\n");
+                                                    // printf("Op\n");
+                                                    // printf("%c %c %c", OpHasil[0], OpHasil[1],  OpHasil[2]);
+                                                    if (simpan)
+                                                    {
+                                                        TwentyFourGSave(arrHasil, OpHasil, &Hasil, &hasil3, &neff, FileCr);
+                                                    }
+                                                    else
+                                                    {
+                                                        TwentyFourG(arrHasil, OpHasil, &Hasil, &hasil3, &neff);
+                                                    }
+
+                                                    // printf("\n\n Total kemungkinan kombinasi dari Op dan permutasi dari numbers : %d\n", ni);`
+                                                    ni++;
+                                                    // printf("\n\n");
                                                 }
-                                                else{
-                                                    TwentyFourG(arrHasil, OpHasil, &Hasil, &hasil3, &neff);
-                                                }
-
-
-                                                // printf("\n\n Total kemungkinan kombinasi dari Op dan permutasi dari numbers : %d\n", ni);`
-                                                ni++;
-                                                // printf("\n\n");
                                             }
                                         }
                                     }
-
-
-                                
                                 }
                             }
                         }
@@ -683,23 +797,39 @@ int main()
                 }
             }
         }
-        
-        if(simpan){
-                // Menutup file 
-                fclose(FileCr);
-                printf("\nFile tersimpan\n");
+
+        if (simpan)
+        {
+            // Menutup file
+            fclose(FileCr);
+            printf("\nFile tersimpan\n");
         }
 
         // waktu selesai
         clock_gettime(CLOCK_REALTIME, &akhir);
-        printf("\n\nBanyaknya Solusi: %d\n", neff + 1);
+        printf("\nBanyaknya Solusi: %d\n", neff + 1);
         double waktu = (akhir.tv_sec - awal.tv_sec) + (akhir.tv_nsec - awal.tv_nsec) / MILYAR;
         printf("Waktu Eksekusi: %f seconds\n", (waktu));
 
+        for(i=0; i<np+1; i++){
+            printf("%d.", i);
+            for(j=0; j<4; j++){
+                printf(" %d", arrPermut[i][j]);
+            }
+            printf("\n");
+        }
+        
         // Menu
-        menu();
+        // menu();
+        printf("type '0' (Main Menu) and '3' (exit) : ");
+        STARTCOMMAND();
+        STARTWORD();
+        if (isWordSame(currentWord, "0"))
+        {
+            menu();
+        }
     }
-    
+
     printf("\n ------------------- terima kasih ------------------- \n\n");
     return 0;
 }

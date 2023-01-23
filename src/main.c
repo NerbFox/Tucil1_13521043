@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include "ADT_MesinKata/boolean.h"
@@ -528,6 +529,7 @@ int main()
     // KAMUS
     int arr[5], n = 0, i, j, k ,l, ni, z, i1, i2, i3;
     arr[4] = 0;
+    int atas = 13, bawah = 1;
     float TwentyFour = 24.0;
     char Hasil[maxHasil][maxStr];
     int neff = -1;
@@ -602,6 +604,10 @@ int main()
                 simpan=true;
             }
             printf("Generate 4 numbers\n");
+            for (i=0; i<4; i++){
+                arr[i] = (rand() % (atas - bawah + 1)) + bawah;
+            }
+		    printf("4 random numbers: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
 
         }
 

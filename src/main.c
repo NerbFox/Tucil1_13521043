@@ -25,7 +25,6 @@ void menu()
 
 boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np)
 {
-    // if(np>-1){
     boolean found = false;
     int i = 0;
     while (!found && i < np + 1)
@@ -37,10 +36,6 @@ boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np)
         i++;
     }
     return found;
-    // }
-    // else{
-    //     return false;
-    // }
 }
 
 void save()
@@ -663,10 +658,7 @@ void TwentyFourData(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], 
     }
 }
 
-// const char* intToStr(int n){
-//     char h[3] = "10";
-//     return h[3];
-// }
+
 
 int main()
 {

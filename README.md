@@ -1,5 +1,6 @@
 # Tucil1_13521043
 IF2211 Strategi Algoritma - Tugas Kecil 1
+
 Nigel Sahl (13521043) - Mahasiswa Semester 4 di Teknik Informatika ITB Angkatan 2021
 
 

@@ -38,6 +38,21 @@ boolean IsIn(int arr[4], int (*arrPermut)[maxHasil][4], int np)
     return found;
 }
 
+boolean IsIn3(float arr[3], float(hasil3)[maxHasil][3], int np)
+{
+    boolean found = false;
+    int i = 0;
+    while (!found && i < np + 1)
+    {
+        if ((hasil3)[i][0] == arr[0] && (hasil3)[i][1] == arr[1])
+        {
+            found = true;
+        }
+        i++;
+    }
+    return found;
+}
+
 void save()
 {
     printf("\nApakah Jawaban yang akan dihasilkan ingin disimpan dalam txt file? (y/n)\n");
@@ -162,13 +177,13 @@ void TwentyFourG(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], flo
     (hasil3n)[1] = calculate((hasil3n)[0], op[1], number[2]);
     (hasil3n)[2] = calculate((hasil3n)[1], op[2], number[3]);
     a = (hasil3n)[2];
-    if (a == 24.00)
+    if (a == 24.00) // && ! IsIn3(hasil3n, *hasil3, *neff)
     {
-        printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
         (*neff)++;
         (*hasil3)[*neff][0] = hasil3n[0];
         (*hasil3)[*neff][1] = hasil3n[1];
         (*hasil3)[*neff][2] = a;
+        printf("((%d%c%d)%c%d)%c%d\n", number[0], op[0], number[1], op[1], number[2], op[2], number[3]);
     }
 
     // n0+((n1+n2)+n3)
@@ -658,8 +673,6 @@ void TwentyFourData(int number[4], char op[3], char (*hasil)[maxHasil][maxStr], 
     }
 }
 
-
-
 int main()
 {
     // KAMUS
@@ -992,6 +1005,16 @@ int main()
         //     for (j = 0; j < 4; j++)
         //     {
         //         printf(" %d", arrPermut[i][j]);
+        //     }
+        //     printf("\n");
+        // }
+
+        // for (i = 0; i < neff + 1; i++)
+        // {
+        //     printf("%d.", i);
+        //     for (j = 0; j < 3; j++)
+        //     {
+        //         printf(" %.2f", hasil3[i][j]);
         //     }
         //     printf("\n");
         // }
